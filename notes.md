@@ -1,34 +1,35 @@
-Design Notes
-Database
+Development Notes - THworks Task Tracker
 
-Using PostgreSQL schema with UUID primary keys and CHECK constraints for priority and status.
+Database:
 
-Added indexes on status, priority, and due_date for efficient filtering and sorting.
+One table named tasks.
 
-Backend
+Columns include id, title, description, priority, status, due_date, and created_at.
 
-Built with Express + pg for simplicity and direct SQL control (predictable and easy to read).
+Priority can be Low, Medium, or High.
 
-Used Joi for request validation to prevent invalid data from reaching the database.
+Status values include Open, In Progress, Done, and Blocked.
 
-Implemented /insights using lightweight SQL aggregations handled at the DB layer for performance, followed by a small rule-based sentence generator for human-readable summaries.
+API Endpoints:
+POST /tasks - Add a new task
+GET /tasks - Get all tasks
+PATCH /tasks/:id - Update a task
+GET /insights - View summary of all tasks
 
-Frontend
+Insight Rules:
 
-Minimal React app with three components: AddTask, TaskList, and Insights.
+Count total and pending tasks.
 
-Uses fetch and simple local state — suitable for quick demos and testing.
+Identify tasks due soon.
 
-Potential Improvements (time permitting)
+Show number of high-priority tasks.
 
-Add JWT authentication with per-user task ownership and isolation.
+Display short summary text for insights.
 
-Implement pagination and server-side filtering using OFFSET/LIMIT.
+Future Enhancements:
 
-Develop a full test suite (unit tests for endpoints + integration tests).
+Add login for multiple users.
 
-Introduce a database migration tool (Knex / TypeORM / Sequelize) for production-grade schema management.
+Add charts for analytics.
 
-Add charts and visualizations (e.g., Chart.js / Recharts) for task timelines and priority distributions.
-
-Implement optimistic UI updates and improved styling for better UX.
+Add drag-and-drop for task movement.
