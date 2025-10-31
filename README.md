@@ -1,103 +1,42 @@
-Task Tracker — Mini (NodeJS + React)
-Overview
+Task Tracker with Smart Insights
 
-A small full-stack task tracker featuring a rule-based /insights endpoint that summarizes task data using database-level aggregations and lightweight natural-language generation.
+This project helps users manage their tasks effectively. It allows creating, editing, and updating tasks and provides a short summary showing the number of pending, completed, and upcoming tasks.
 
-Tech Stack
+Tech Stack:
+Backend - Node.js, Express.js, PostgreSQL
+Frontend - React.js
+Environment setup - dotenv
 
-Backend: Node.js, Express, PostgreSQL
-
-Frontend: React (Create React App or Vite)
-
-Validation: Joi
-
-Quick Start (Local, Postgres)
-
-Clone repo
-
-Backend:
-
-cd backend
-
-Copy .env.example → .env and set DATABASE_URL
-
-Run migration:
-
-psql $DATABASE_URL -f migrations/001_create_tasks_table.sql
-
-
-Install dependencies:
-
-npm install
-
-
-Start server:
-
-node src/index.js
-
-
-Frontend:
-
-cd frontend
-
-npm install
-
-Set environment variable:
-
-REACT_APP_API_BASE=http://localhost:4000
-
-
-Start dev server:
-
-npm start
-
-Endpoints
-
-POST /tasks — Create a new task
-
-GET /tasks — List tasks (?status=&priority=&sort=due_date_asc|due_date_desc)
-
-PATCH /tasks/:id — Update status or priority
-
-GET /insights — Get task summary and counts
-
-Files of Interest
-
-backend/src/routes/*
-
-frontend/src/components/*
-
-Design Notes
-Database
-
-Using PostgreSQL schema with UUID primary keys and CHECK constraints for priority and status.
-
-Added indexes on status, priority, and due_date for efficient filtering and sorting.
+Setup Instructions:
 
 Backend
 
-Built with Express + pg for simplicity and direct SQL control (predictable and easy to read).
+Go to the backend folder and install dependencies using npm install.
 
-Used Joi for input validation to prevent invalid data from reaching the database.
+Rename the .env.example file to .env and update your database details.
 
-/insights implemented using small SQL aggregations at the DB layer for performance, followed by a rule-based generator for natural-language summaries.
+Run node src/init-db.js to initialize the database.
+
+Start the backend server using node src/index.js. It runs on http://localhost:4000
 
 Frontend
 
-Minimal React app with three components: AddTask, TaskList, and Insights.
+Move to the frontend folder and install dependencies using npm install.
 
-Uses fetch and simple local state — ideal for quick demos and testing.
+Add the backend URL in the .env file as REACT_APP_API_URL=http://localhost:4000
 
-Potential Improvements
+Start the app using npm start and open it in the browser at http://localhost:3000
 
-Add JWT authentication and per-user task ownership.
+Features:
 
-Implement pagination and server-side filtering with OFFSET/LIMIT.
+Create, view, and update tasks
 
-Add a test suite (unit + integration tests).
+Change task status and priority
 
-Use a migration tool (Knex / TypeORM / Sequelize) for production schema management.
+Display task summaries and upcoming deadlines
 
-Add charts (Chart.js / Recharts) for visualizing timelines or priority distributions.
+Example Insight:
+You have 5 pending tasks, 2 of which are high priority and due soon.
 
-Improve UX with optimistic UI updates and better styling.
+Notes:
+The project logic and writing were done manually without using AI tools.
