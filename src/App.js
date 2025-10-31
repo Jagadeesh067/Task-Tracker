@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import AddTask from './AddTask';
+import TaskList from './TaskList';
+import './App.css'; // 👈 Import CSS file
 
-function App() {
+export default function App() {
+  const apiBase = 'http://localhost:4000';
+  const [tasks, setTasks] = useState([]);
+
+  async function fetchTasks() {
+    const res = await fetch(`${apiBase}/tasks`);
+    const data = await res.json();
+    setTasks(data);
+  }
+
+  useEffect(() => { fetchTasks(); }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1 className="app-title">📝 Task Tracker</h1>
+      <div className="app-content">
+        <AddTask apiBase={apiBase} onCreated={fetchTasks} />
+        <TaskList tasks={tasks} apiBase={apiBase} onUpdated={fetchTasks} />
+      </div>
     </div>
   );
 }
-
-export default App;
