@@ -1,10 +1,12 @@
-const Database = require("better-sqlite3");
-const path = require("path");
+// src/db.js
+require("dotenv").config();
+const { Pool } = require("pg");
 
-// Correct relative path — goes up one directory from src/
-const dbPath = path.resolve(__dirname, "../database/tasktracker.db");
-const db = new Database(dbPath);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-console.log(`✅ Connected to SQLite database at: ${dbPath}`);
-
-module.exports = db;
+module.exports = pool;
